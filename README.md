@@ -7,7 +7,7 @@
 - واجهة عربية RTL تتكيّف مع الهاتف وسطح المكتب.
 - محادثة متدفقة لحظياً؛ أسئلة مقترحة، محادثة جديدة، ونسخ الرد.
 - آخر 40 رسالة تحفظ محلياً في المتصفح فقط.
-- نقطة API على الخادم تتصل بمزوّد متوافق مع OpenAI Chat Completions؛ مفتاح المزود لا يصل إلى المتصفح.
+- نقطة API على الخادم تستخدم توافق Gemini مع OpenAI Chat Completions؛ المفتاح لا يصل إلى المتصفح.
 - تحقق من صحة الطلبات وحدود الحجم وعدد الرسائل، مع رسائل خطأ واضحة.
 
 ## التشغيل المحلي
@@ -19,13 +19,14 @@ pnpm install
 cp .env.example .env.local
 ```
 
-ضع مفتاح مزود الذكاء الاصطناعي الحقيقي في `.env.local`:
+أنشئ مفتاح Gemini API في [Google AI Studio](https://aistudio.google.com/apikey) على مشروع Free، ثم ضع المفتاح في `.env.local`:
 
 ```env
-OPENAI_API_KEY=...
-OPENAI_BASE_URL=https://api.openai.com/v1
-OPENAI_MODEL=gpt-4.1-mini
+GEMINI_API_KEY=ضع_مفتاحك_هنا
+GEMINI_MODEL=gemini-3.8-flash
 ```
+
+Gemini 3.8 Flash متاح ضمن حصة مجانية محدودة؛ الحدود قد تتغير. لا تفعّل الفوترة إن كنت تريد إبقاء الاستخدام مجانيًا. في خطة Google المجانية قد تُستخدم الطلبات لتحسين منتجات Google، فلا ترسل معلومات سرية.
 
 ثم شغّل:
 
@@ -38,7 +39,7 @@ pnpm dev
 ## النشر على Vercel
 
 1. استورد المستودع من GitHub في Vercel واختر الفرع `arabic-ai-chatbot` وإعدادات Next.js الافتراضية؛ يبقى الفرع الأصلي `main` كما هو.
-2. من Project Settings → Environment Variables أضف `OPENAI_API_KEY`، ثم `OPENAI_BASE_URL` و`OPENAI_MODEL` عند الحاجة.
+2. من Project Settings → Environment Variables أضف `GEMINI_API_KEY`، ويمكنك ضبط `GEMINI_MODEL`؛ الافتراضي `gemini-3.8-flash`.
 3. فعّل المتغيرات لبيئة Production (وPreview إذا رغبت)، ثم نفّذ Deploy. لا تضع المفتاح في `NEXT_PUBLIC_*` ولا ترفعه إلى GitHub.
 
 لا يحتاج التطبيق إلى قاعدة بيانات أو تخزين Vercel. رابط النشر واسم النطاق يحددهما حساب Vercel عند النشر.
@@ -54,5 +55,5 @@ pnpm dev
 
 - لا يوجد تسجيل دخول أو حفظ سحابي؛ السجل محلي على الجهاز/المتصفح الحالي.
 - نقطة المحادثة متاحة للزوار في الموقع؛ ضع حماية دخول وحدّ استخدام/حصة لدى المزود قبل نشر رابط عام واسع الانتشار لتقليل إساءة الاستخدام والتكلفة.
-- إذا استخدمت مزوداً آخر، يجب أن يقبل `POST /chat/completions` ورسائل OpenAI-compatible مع بث SSE، ومفتاح Bearer.
-- لا يتضمن المشروع أي مفتاح API حقيقي.
+- يتصل التطبيق بنقطة Gemini المتوافقة مع OpenAI، ويبث الردود عبر SSE.
+- لا يتضمن المشروع مفتاح API حقيقياً؛ أنشئه من حساب Google AI Studio الخاص بك وأضفه مباشرة إلى Vercel، ولا ترسله في الدردشة أو ترفعه إلى GitHub.

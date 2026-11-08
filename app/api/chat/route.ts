@@ -10,9 +10,9 @@ const systemPrompt = `أنت نَبض، مساعد ذكي ودود ودقيق. �
 type ChatMessage = { role: "user" | "assistant"; content: string };
 
 export async function POST(request: Request) {
-  const apiKey = process.env.OPENAI_API_KEY?.trim();
+  const apiKey = process.env.GEMINI_API_KEY?.trim();
   if (!apiKey) {
-    return NextResponse.json({ error: "المساعد غير مهيّأ بعد. أضف OPENAI_API_KEY إلى متغيرات البيئة." }, { status: 503 });
+    return NextResponse.json({ error: "المساعد غير مهيّأ بعد. أضف GEMINI_API_KEY في إعدادات البيئة." }, { status: 503 });
   }
 
   let body: unknown;
@@ -34,8 +34,8 @@ export async function POST(request: Request) {
   }
   if (messages.at(-1)?.role !== "user") return NextResponse.json({ error: "يجب أن تنتهي المحادثة برسالة منك." }, { status: 400 });
 
-  const baseUrl = (process.env.OPENAI_BASE_URL || "https://api.openai.com/v1").trim().replace(/\/+$/, "");
-  const model = process.env.OPENAI_MODEL?.trim() || "gpt-4.1-mini";
+  const baseUrl = "https://generativelanguage.googleapis.com/v1beta/openai";
+  const model = process.env.GEMINI_MODEL?.trim() || "gemini-3.8-flash";
   let upstream: Response;
   try {
     upstream = await fetch(`${baseUrl}/chat/completions`, {
@@ -51,7 +51,7 @@ export async function POST(request: Request) {
 
   if (!upstream.ok || !upstream.body) {
     const status = upstream.status;
-    const error = status === 401 || status === 403 ? "مفتاح الخدمة غير صالح أو لا يملك صلاحية الاستخدام. تحقق من OPENAI_API_KEY." : status === 429 ? "طلبات كثيرة حالياً أو لا يوجد رصيد كافٍ لدى مزوّد الخدمة." : status >= 500 ? "خدمة الذكاء الاصطناعي تواجه عطلاً مؤقتاً." : "رفض مزوّد الخدمة الطلب. تحقق من اسم النموذج وإعدادات الخدمة.";
+    const error = status === 401 || status === 403 ? "مفتاح الخدمة غير صالح أو لا يملك صلاحية الاستخدام. تحقق من GEMINI_API_KEY." : status === 429 ? "طلبات كثيرة حالياً أو لا يوجد رصيد كافٍ لدى مزوّد الخدمة." : status >= 500 ? "خدمة الذكاء الاصطناعي تواجه عطلاً مؤقتاً." : "رفض مزوّد الخدمة الطلب. تحقق من اسم النموذج وإعدادات الخدمة.";
     return NextResponse.json({ error }, { status: status === 429 ? 429 : 502 });
   }
 
