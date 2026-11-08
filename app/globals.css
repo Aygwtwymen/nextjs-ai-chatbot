@@ -1,318 +1,62 @@
-@import "tailwindcss";
-@import "katex/dist/katex.min.css";
 
-/* include utility classes in streamdown */
-@source "../node_modules/streamdown/dist/index.js";
-
-/* custom variant for setting dark mode programmatically */
-@custom-variant dark (&:is(.dark, .dark *));
-
-/* include plugins */
-@plugin "tailwindcss-animate";
-@plugin "@tailwindcss/typography";
-
-/* define design tokens (light mode) */
-:root {
-  --background: hsl(0 0% 100%);
-  --foreground: hsl(240 10% 3.9%);
-  --card: hsl(0 0% 100%);
-  --card-foreground: hsl(240 10% 3.9%);
-  --popover: hsl(0 0% 100%);
-  --popover-foreground: hsl(240 10% 3.9%);
-  --primary: hsl(240 5.9% 10%);
-  --primary-foreground: hsl(0 0% 98%);
-  --secondary: hsl(240 4.8% 95.9%);
-  --secondary-foreground: hsl(240 5.9% 10%);
-  --muted: hsl(240 4.8% 95.9%);
-  --muted-foreground: hsl(240 3.8% 46.1%);
-  --accent: hsl(240 4.8% 95.9%);
-  --accent-foreground: hsl(240 5.9% 10%);
-  --destructive: hsl(0 84.2% 60.2%);
-  --destructive-foreground: hsl(0 0% 98%);
-  --border: hsl(240 5.9% 90%);
-  --input: hsl(240 5.9% 90%);
-  --ring: hsl(240 10% 3.9%);
-  --chart-1: hsl(12 76% 61%);
-  --chart-2: hsl(173 58% 39%);
-  --chart-3: hsl(197 37% 24%);
-  --chart-4: hsl(43 74% 66%);
-  --chart-5: hsl(27 87% 67%);
-  --sidebar-background: hsl(0 0% 98%);
-  --sidebar-foreground: hsl(240 5.3% 26.1%);
-  --sidebar-primary: hsl(240 5.9% 10%);
-  --sidebar-primary-foreground: hsl(0 0% 98%);
-  --sidebar-accent: hsl(240 4.8% 95.9%);
-  --sidebar-accent-foreground: hsl(240 5.9% 10%);
-  --sidebar-border: hsl(220 13% 91%);
-  --sidebar-ring: hsl(217.2 91.2% 59.8%);
-  /* border radius unit */
-  --radius: 0.5rem;
-  --sidebar: hsl(0 0% 98%);
-}
-
-/* define design tokens (dark mode) */
-.dark {
-  --background: hsl(240 10% 3.9%);
-  --foreground: hsl(0 0% 98%);
-  --card: hsl(240 10% 3.9%);
-  --card-foreground: hsl(0 0% 98%);
-  --popover: hsl(240 10% 3.9%);
-  --popover-foreground: hsl(0 0% 98%);
-  --primary: hsl(0 0% 98%);
-  --primary-foreground: hsl(240 5.9% 10%);
-  --secondary: hsl(240 3.7% 15.9%);
-  --secondary-foreground: hsl(0 0% 98%);
-  --muted: hsl(240 3.7% 15.9%);
-  --muted-foreground: hsl(240 5% 64.9%);
-  --accent: hsl(240 3.7% 15.9%);
-  --accent-foreground: hsl(0 0% 98%);
-  --destructive: hsl(0 62.8% 30.6%);
-  --destructive-foreground: hsl(0 0% 98%);
-  --border: hsl(240 3.7% 15.9%);
-  --input: hsl(240 3.7% 15.9%);
-  --ring: hsl(240 4.9% 83.9%);
-  --chart-1: hsl(220 70% 50%);
-  --chart-2: hsl(160 60% 45%);
-  --chart-3: hsl(30 80% 55%);
-  --chart-4: hsl(280 65% 60%);
-  --chart-5: hsl(340 75% 55%);
-  --sidebar-background: hsl(240 5.9% 10%);
-  --sidebar-foreground: hsl(240 4.8% 95.9%);
-  --sidebar-primary: hsl(224.3 76.3% 48%);
-  --sidebar-primary-foreground: hsl(0 0% 100%);
-  --sidebar-accent: hsl(240 3.7% 15.9%);
-  --sidebar-accent-foreground: hsl(240 4.8% 95.9%);
-  --sidebar-border: hsl(240 3.7% 15.9%);
-  --sidebar-ring: hsl(217.2 91.2% 59.8%);
-  --sidebar: hsl(240 5.9% 10%);
-}
-
-/* define theme */
-@theme {
-  --font-sans: var(--font-geist);
-  --font-mono: var(--font-geist-mono);
-
-  --breakpoint-toast-mobile: 600px;
-
-  --radius-lg: var(--radius);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-sm: calc(var(--radius) - 4px);
-
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-
-  --color-sidebar: var(--sidebar-background);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
-}
-
-/*
-  The default border color has changed to `currentcolor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
-@layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentcolor);
-  }
-}
-
-@utility text-balance {
-  text-wrap: balance;
-}
-
-@utility -webkit-overflow-scrolling-touch {
-  -webkit-overflow-scrolling: touch;
-}
-
-@utility touch-pan-y {
-  touch-action: pan-y;
-}
-
-@utility overscroll-behavior-contain {
-  overscroll-behavior: contain;
-}
-
-@layer utilities {
-  :root {
-    --foreground-rgb: 0, 0, 0;
-    --background-start-rgb: 214, 219, 220;
-    --background-end-rgb: 255, 255, 255;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --foreground-rgb: 255, 255, 255;
-      --background-start-rgb: 0, 0, 0;
-      --background-end-rgb: 0, 0, 0;
-    }
-  }
-}
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-
-  body {
-    @apply bg-background text-foreground;
-    overflow-x: hidden;
-    position: relative;
-  }
-
-  html {
-    overflow-x: hidden;
-  }
-}
-
-.skeleton {
-  * {
-    pointer-events: none !important;
-  }
-
-  *[class^="text-"] {
-    color: transparent;
-    @apply rounded-md bg-foreground/20 select-none animate-pulse;
-  }
-
-  .skeleton-bg {
-    @apply bg-foreground/10;
-  }
-
-  .skeleton-div {
-    @apply bg-foreground/20 animate-pulse;
-  }
-}
-
-.ProseMirror {
-  outline: none;
-}
-
-.cm-editor,
-.cm-gutters {
-  @apply bg-background! dark:bg-zinc-800! outline-hidden! selection:bg-zinc-900!;
-}
-
-.ͼo.cm-focused > .cm-scroller > .cm-selectionLayer .cm-selectionBackground,
-.ͼo.cm-selectionBackground,
-.ͼo.cm-content::selection {
-  @apply bg-zinc-200! dark:bg-zinc-900!;
-}
-
-.cm-activeLine,
-.cm-activeLineGutter {
-  @apply bg-transparent!;
-}
-
-.cm-activeLine {
-  @apply rounded-r-sm!;
-}
-
-.cm-lineNumbers {
-  @apply min-w-7;
-}
-
-.cm-foldGutter {
-  @apply min-w-3;
-}
-
-.cm-lineNumbers .cm-activeLineGutter {
-  @apply rounded-l-sm!;
-}
-
-.suggestion-highlight {
-  @apply bg-blue-200 hover:bg-blue-300 dark:hover:bg-blue-400/50 dark:text-blue-50 dark:bg-blue-500/40;
-}
-
-/* minimal scrollbar styling */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: 3px;
-  transition: background 0.2s ease;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: --alpha(var(--muted-foreground) / 0.5);
-}
-
-::-webkit-scrollbar-corner {
-  background: transparent;
-}
-
-/* firefox scrollbar styling */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: var(--border) transparent;
-}
-
-@theme inline {
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
-}
-
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-}
+:root{--paper:#f7f7f4;--ink:#20232d;--muted:#858994;--line:#e7e8e4;--blue:#5753d8;--blue-dark:#4945c6;--lavender:#eeedff;--card:#fff;--green:#35a77c}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--paper);color:var(--ink);font-family:"IBM Plex Sans Arabic","Noto Sans Arabic",Tahoma,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+button,textarea{font:inherit}
+button{cursor:pointer}
+.shell{height:100dvh;max-width:1500px;margin:0 auto;display:flex;flex-direction:column;padding:0 46px}
+.topbar{height:76px;flex:none;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-size:19px;font-weight:700;letter-spacing:-.4px}
+.brand-mark,.welcome-orb,.assistant-avatar{display:grid;place-items:center;color:white;background:linear-gradient(145deg,#807bff,#5651d5);box-shadow:0 7px 18px #615be52b}
+.brand-mark{width:34px;height:34px;border-radius:12px}
+.topbar-actions{display:flex;align-items:center;gap:23px}
+.status{display:flex;align-items:center;gap:8px;color:#686d78;font-size:12px}
+.status i{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px #35a77c20}
+.new-chat{height:37px;padding:0 12px;border:1px solid #e5e5e9;background:#fff;border-radius:10px;display:flex;align-items:center;gap:7px;color:#40434e;font-size:12px;transition:.2s}
+.new-chat:hover{border-color:#c8c7f4;background:#fdfdff;color:var(--blue)}
+.workspace{flex:1;min-height:0;display:flex;flex-direction:column;position:relative}
+.welcome{margin:auto;text-align:center;width:min(100%,660px);padding:35px 0 42px;animation:appear .45s ease both}
+.welcome-orb{height:56px;width:56px;border-radius:19px;margin:0 auto 23px}
+.eyebrow{font-size:12px;color:var(--blue);letter-spacing:.1px;margin:0 0 10px;font-weight:600}
+h1{font-size:clamp(34px,5vw,47px);line-height:1.3;letter-spacing:-1.5px;margin:0;font-weight:700}
+h1 span{color:var(--blue)}
+.intro{font-size:15px;line-height:1.9;color:#777c87;margin:14px 0 26px}
+.suggestions{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.suggestions button{min-height:70px;text-align:right;display:flex;align-items:center;justify-content:space-between;gap:9px;padding:12px 14px;border:1px solid var(--line);background:#fff;border-radius:14px;color:#525661;font-size:12px;line-height:1.7;box-shadow:0 3px 10px #272b3405;transition:.2s}
+.suggestions button span{font-size:17px;color:#8885ea;flex:none}
+.suggestions button:hover{border-color:#c9c7fa;transform:translateY(-2px);box-shadow:0 8px 20px #5551d510}
+.has-messages{overflow:hidden}
+.conversation{width:min(100%,790px);margin:0 auto;overflow-y:auto;overscroll-behavior:contain;padding:30px 4px 34px;scrollbar-width:thin;scrollbar-color:#d6d7dd transparent}
+.message{display:flex;gap:12px;margin:0 0 25px;align-items:flex-start;animation:appear .22s ease both}
+.message.user{justify-content:flex-start}
+.message.assistant{justify-content:flex-start}
+.assistant-avatar{width:30px;height:30px;flex:none;border-radius:11px;margin-top:2px}
+.message-content{max-width:min(100%,680px);min-width:0}
+.message.user .message-content{background:#eeedff;border:1px solid #e4e3ff;border-radius:17px 5px 17px 17px;padding:12px 16px}
+.message.assistant .message-content{padding:3px 0 0;flex:1}
+.message-label{display:block;font-size:11px;color:var(--blue);font-weight:700;margin:0 0 4px}
+.message-content p{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px;line-height:1.95;color:#373a44}
+.copy-button{margin-top:7px;width:29px;height:27px;display:grid;place-items:center;border:0;background:transparent;color:#9397a1;border-radius:7px}
+.copy-button:hover{background:#eeedff;color:var(--blue)}
+.typing{display:inline-flex;gap:4px;align-items:center;height:23px}
+.typing i{width:5px;height:5px;background:#7773dd;border-radius:50%;animation:dot 1.1s infinite ease-in-out}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+.composer-wrap{width:min(100%,790px);margin:0 auto;padding:13px 0 16px;flex:none}
+.composer{border:1px solid #dedfe5;border-radius:18px;background:var(--card);padding:13px 14px 10px;box-shadow:0 9px 32px #20212a0a;transition:border-color .2s,box-shadow .2s}
+.composer:focus-within{border-color:#b7b5f2;box-shadow:0 9px 32px #5551d511}
+.composer textarea{display:block;resize:none;min-height:37px;max-height:190px;width:100%;border:0;outline:0;background:transparent;color:var(--ink);padding:2px 2px 8px;font-size:14px;line-height:1.8}
+.composer textarea::placeholder{color:#a0a3ab}
+.composer textarea:disabled{opacity:.7}
+.composer-bottom{display:flex;align-items:center;justify-content:space-between}
+.hint{font-size:10px;color:#a0a3ab}
+.send-button{width:36px;height:36px;border:0;border-radius:12px;display:grid;place-items:center;color:#fff;background:var(--blue);transition:.2s}
+.send-button:hover:not(:disabled){background:var(--blue-dark);transform:translateY(-1px)}
+.send-button:disabled{background:#d9d9e7;cursor:not-allowed}
+.loader{width:15px;height:15px;border:2px solid #ffffff70;border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
+.disclaimer{text-align:center;font-size:10px;color:#a0a3ab;margin:9px 0 0}
+.error-banner{position:absolute;bottom:19px;left:50%;transform:translateX(-50%);width:min(100%,650px);display:flex;align-items:center;gap:9px;padding:11px 13px;border:1px solid #f0c8c8;border-radius:12px;background:#fff6f5;color:#8c4040;font-size:12px;box-shadow:0 8px 25px #20212a0b;z-index:2}
+.error-banner button{margin-right:auto;border:0;background:none;color:#8c4040;font-size:20px;line-height:1}
+@keyframes spin{to{transform:rotate(360deg)}}@keyframes dot{0%,60%,100%{transform:translateY(0);opacity:.45}30%{transform:translateY(-4px);opacity:1}}@keyframes appear{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:700px){.shell{padding:0 18px}.topbar{height:65px}.topbar-actions{gap:13px}.status{font-size:11px}.new-chat{width:37px;padding:0;justify-content:center}.new-chat span{display:none}.welcome{padding:22px 0 32px}.welcome-orb{margin-bottom:18px}h1{font-size:36px}.intro{font-size:14px;margin:11px 0 22px}.suggestions{grid-template-columns:1fr;gap:8px}.suggestions button{min-height:50px;padding:10px 13px}.conversation{padding-top:22px}.composer-wrap{padding-bottom:max(12px,env(safe-area-inset-bottom))}.hint{font-size:9px}.message-content p{font-size:13px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
